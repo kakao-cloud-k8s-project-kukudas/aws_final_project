@@ -1,4 +1,4 @@
-![header](https://capsule-render.vercel.app/api?type=waving&color=FFA07A&height=300&section=header&text=Team%20Kukudas&fontSize=90&animation=fadeIn&fontAlignY=38&desc=Kakao%20CloudSchool%20Engineer%20Class%201st%20term&fontColor=FFFFFF&descAlignY=50&descAlign=61)
+![header](https://capsule-render.vercel.app/api?type=waving&color=FFA07A&height=300&section=header&text=Team%20Kukudas%20🐱&fontSize=90&animation=fadeIn&fontAlignY=38&desc=Kakao%20CloudSchool%20Engineer%20Class%201st%20term&fontColor=FFFFFF&descAlignY=50&descAlign=53)
 
 # 교육 기관용 그룹웨어 구축 및 제공 (Provision AWS resources with Terraform)
 
@@ -8,25 +8,26 @@
 
 > 2022.11.01 - 2021.12.13
 
-### Contests
+## Contests
 
 📌 2022 카카오 클라우드 스쿨 엔지니어 양성과정 1기 최종 프로젝트
 
 <br>
 
-### Summary
+## Summary
 
-### Implementation Plan
-1. 인프라 구축
+
+## Implementation Plan
+### 인프라 구축
   - Terraform을 이용한 AWS 기반 클라우드 인프라 구축 (EKS, LB, VPC, 이중화 배포)
   - DR 대비를 위한 여러 개의 zone에 노드 배포 및 Auto scailing 설정
   
-2. 노드 관리
+### 노드 관리
   - 각 기관별로 Moodle, 모니터링 시스템을 배포하기 위한 도커 이미지 생성
    (Moodle: 오픈 소스 전자학습 플랫폼, 교육자의 온라인 학습을 지원하고 관리) 
   - Ansible을 이용해 pod 배포 및 노드 관리 진행
   
-3. 서비스 제공
+### 서비스 제공
   - 각 기관에 제공할 수 있는 모니터링 대쉬보드 제공 (Prometheus, Grafana 이용)
   - 메인 홈페이지를 구축해(Django) 교육기관의 기관명과 SLA를 입력받은 후, RDS에 저장
   - 해당 SLA를 만족시키는 HPA 구현 
