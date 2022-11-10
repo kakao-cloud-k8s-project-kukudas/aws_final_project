@@ -14,7 +14,8 @@
 
 <br>
 
-## Summary
+## Topology
+- 그림 추가 예정
 
 ## Implementation Plan
 
@@ -31,10 +32,20 @@
   - 각 기관에 제공할 수 있는 모니터링 대쉬보드 제공 (Prometheus, Grafana 이용)
   - 메인 홈페이지를 구축해(Django) 교육기관의 기관명과 SLA를 입력받은 후, RDS에 저장
   - 해당 SLA를 만족시키는 HPA 구현 
- 
-## About Project
 
-## Results
+<br>
+
+## Expected effect
+
+1) 클라우드 인프라를 이중화 서버로 구축하며 무중단 서비스를 제공할 수 있다. 
+2) 트래픽에 따라 pod와 worker 노드의 수 조절을 통해 운용 비용 절감한다.
+3) pod로 교육용 그룹웨어를 배포함으로써 구축시간을 절감한다.
+4) 교육용 그룹웨어를 구축해봄으로써 교육용 뿐만 아니라 기업에게 제공할 수 있는 그룹웨어 구축의
+기반을 다질 수 있다.
+
+<!-- ## About Project
+
+## Results -->
 
 <!-- <img src=images/summary.jpg  width="70%"/> -->
 
