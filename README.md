@@ -1,6 +1,6 @@
 ![header](https://capsule-render.vercel.app/api?type=waving&color=FFA07A&height=300&section=header&text=Team%20Kukudas%20🐱&fontSize=90&animation=fadeIn&fontAlignY=38&desc=Kakao%20CloudSchool%20Engineer%20Class%201st%20term&fontColor=FFFFFF&descAlignY=50&descAlign=53)
 
-# 교육 기관용 그룹웨어 구축 및 제공 (Provision AWS resources with Terraform)
+# 교육 기관용 그룹웨어 구축 및 제공 <br>(Provision AWS resources with Terraform)
 
 
 
