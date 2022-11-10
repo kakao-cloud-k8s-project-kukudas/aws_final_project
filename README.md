@@ -1,1 +1,1 @@
-![header](https://capsule-render.vercel.app/api?type=Waving&color=FFA07A&height=200&text=%Kukudas&fontColor=#FFFFFF)
+![header](https://capsule-render.vercel.app/api?type=waving&color=FFA07A&height=300&section=header&text=Team%20Kukudas&fontSize=90&animation=fadeIn&fontAlignY=38&desc=Kakao%20CloudSchool%20Engineer%20Class&descAlignY=50&descAlign=66)
