@@ -1,13 +1,13 @@
 # variables.tf
-#도쿄리전일 경우 “ap-northeast-1”
+# 서울 리전일 경우 “ap-northeast-2”
 variable "region" {
-  default = "ap-northeast-2"
+  default = "ap-northeast-1"
 }
 
 variable "azs" {
   description = "A list of availability zones names or ids in the region"
   type = list(string)
-  default = ["ap-northeast-2a", "ap-northeast-2c"]
+  default = ["ap-northeast-1a", "ap-northeast-1c", "ap-northeast-1d"]
 }
 
 variable "cluster_name" {
