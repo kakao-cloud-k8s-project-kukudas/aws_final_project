@@ -36,8 +36,8 @@ module "eks" {
   eks_managed_node_groups = {
     ("${var.cluster_name}-node-group") = {
       # node group 스케일링
-      min_size     = 1 # 최소(2로)
-      max_size     = 3 # 최대
+      min_size     = 2 # 최소(2로)
+      max_size     = 4 # 최대
       desired_size = 2 # 기본 유지
 
       # 생성된 node에 labels 추가 (kubectl get nodes --show-labels로 확인 가능)
