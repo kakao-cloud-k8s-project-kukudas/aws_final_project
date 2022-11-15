@@ -34,7 +34,7 @@ extraArgs:
   v: 4
   expander: random
   scale-down-enabled: true " > values.yaml
-helm repo add autoscaler <https://kubernetes.github.io/autoscaler>
+helm repo add autoscaler https://kubernetes.github.io/autoscaler
 
 helm repo update
 
