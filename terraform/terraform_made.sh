@@ -38,4 +38,4 @@ helm repo add autoscaler https://kubernetes.github.io/autoscaler
 
 helm repo update
 
-helm install cluster-autoscaler autoscaler/cluster-autoscaler --values=./valuse.yaml
+helm install cluster-autoscaler autoscaler/cluster-autoscaler --values=./values.yaml
