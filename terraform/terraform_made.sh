@@ -16,6 +16,7 @@ cluster_version  = \"1.20\" " > terraform.auto.tfvars
 terraform init
 terraform workspace new $name
 terraform plan
+terraform -auto-approve
 
 #클러스터 초기 설정
 aws eks --region ap-northeast-1 update-kubeconfig --name $name
