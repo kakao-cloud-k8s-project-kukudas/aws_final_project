@@ -1,6 +1,5 @@
 #!/bin/bash
-echo "Enter the eks name: "
-read name
+name=$(date '+%m%d%H%M')
 echo "eks cluster name: $name"
 cp -r terraformprj/ $name
 rm -rf terraform.auto.tfvars  terraform.tfstate.backup terraform.tfstate.d   
@@ -16,7 +15,7 @@ cluster_version  = \"1.20\" " > terraform.auto.tfvars
 terraform init
 terraform workspace new $name
 terraform plan
-terraform -auto-approve
+terraform apply -auto-approve
 
 #클러스터 초기 설정
 aws eks --region ap-northeast-1 update-kubeconfig --name $name
