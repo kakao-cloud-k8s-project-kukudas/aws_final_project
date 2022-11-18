@@ -2,8 +2,8 @@
 name=$(date '+%m%d%H%M')
 echo "eks cluster name: $name"
 cp -r terraformprj/ $name
-rm -rf terraform.auto.tfvars  terraform.tfstate.backup terraform.tfstate.d   
 cd $name
+rm -rf terraform.auto.tfvars  terraform.tfstate.backup terraform.tfstate.d   
 echo "
 # terraform.auto.tfvars
 vpc_name     = \"${name}-vpc\"
