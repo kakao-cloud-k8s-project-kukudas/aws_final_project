@@ -26,10 +26,15 @@ resource "kubernetes_deployment" "moodle" {
           image = "bitnami/moodle:latest"
           name  = "moodle"
           env{
+            name = "MOODLE_DATABASE_TYPE"
+            value = "mysqli"
+          }
+
+
+          env{
             name = "MOODLE_DATABASE_HOST"
             value = aws_db_instance.rds.endpoint
           }
-
           env{
             name = "MOODLE_DATABASE_USER"
             value = aws_db_instance.rds.username
@@ -39,7 +44,7 @@ resource "kubernetes_deployment" "moodle" {
              value = aws_db_instance.rds.password
           }
           env{
-            name = "MOODLE_DATABASE"
+            name = "MOODLE_DATABASE_NAME"
             value = aws_db_instance.rds.db_name
           }
           port {
