@@ -1,0 +1,56 @@
+# /mnt는 미리 존재해야함
+# wordpress
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  namespace: mysql
+  name: pv0001
+  labels:
+    type: local
+spec:
+  capacity:
+    storage: 25Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/mnt/pv0001" 
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  namespace: mysql
+  name: mysql-volumeclaim
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi 
+---
+# mysql
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  namespace: mysql
+  name: pv0002
+  labels:
+    type: local
+spec:
+  capacity:
+    storage: 25Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/mnt/pv0002"
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  namespace: mysql
+  name: wordpress-volumeclaim
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
