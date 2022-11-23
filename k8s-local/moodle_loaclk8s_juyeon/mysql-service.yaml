@@ -1,0 +1,14 @@
+# pod간 통신을 위해(아마도?) clusterIP 할당이 필요하다. 
+# docker compose은 같은 네트워크를 사용했기 때문에 그냥 가능!
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql
+  labels:
+    app: mysql
+spec:
+  type: ClusterIP
+  ports:
+    - port: 3306
+  selector:
+    app: mysql
