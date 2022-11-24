@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wordpress
+  labels:
+    app: wordpress
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: wordpress
+  template:
+    metadata:
+      labels:
+        app: wordpress
+    spec:
+      containers:
+        - image: bitnami/moodle
+          name: wordpress
+          command: ['sh', '-c', 'sleep 60 && /opt/bitnami/scripts/moodle/run.sh'] # 바로 실행시키면 계속 오류나서 멈춘 다음에 스크립트 실행
+          env:
+          - name: MOODLE_DATABASE_HOST
+            value: "10.105.74.151" # mysql의 clusterIP를 사용해야 함
+          - name: MOODLE_DATABASE_PORT
+            value: "3306"
+          - name: MOODLE_DATABASE_NAME
+            value: "moodle"
+          - name: MOODLE_DATABASE_USER
+            value: "moodle"
+          - name: MOODLE_DATABASE_PASSWORD
+            value: "admin"
+          - name: NAMI_DEBUG # 로그를 보기 위함, 없어도 됨
+            value: "--log-level=trace"
+          ports:
+            - containerPort: 8080 # http 포트 열기
+              name: wptcp
+            - containerPort: 8443 # https 포트 열기
+              name: wptcpssl

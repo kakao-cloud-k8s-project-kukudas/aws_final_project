@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: lb
+  annotations:
+    metallb.universe.tf/address-pool: default # metallb의 lb을 사용하기 위함
+  labels:
+    app: wordpress
+spec:
+  ports:
+  - port: 80 # 80번으로 연다.
+    targetPort: 8080
+    name: wptcp
+  - port: 8443 # 443은 kubernetes가 쓰고 있어서 안씀, 쓰고 싶으면 ns을 따로 지정해줘야 할듯!
+    targetPort: 8443
+    name: wptcpssl
+  selector:
+    app: wordpress
+  type: LoadBalancer
