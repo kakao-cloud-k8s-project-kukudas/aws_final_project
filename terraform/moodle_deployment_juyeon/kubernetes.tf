@@ -25,11 +25,10 @@ resource "kubernetes_deployment" "moodle" {
         container {
           image = "bitnami/moodle:latest"
           name  = "moodle"
-          command = ["sh", "-c", "sleep 60 && /opt/bitnami/scripts/moodle/run.sh"] 
-          
+          command = ["sh", "-c", "sleep 60 && /opt/bitnami/scripts/moodle/run.sh"]
           env{
             name = "MOODLE_DATABASE_HOST"
-            value = "${aws_db_instance.rds.endpoint}"
+            value = "${aws_db_instance.rds.address}"
           }
           env{
             name = "MOODLE_DATABASE_PORT"
@@ -41,7 +40,7 @@ resource "kubernetes_deployment" "moodle" {
           }
           env{
             name = "MOODLE_DATABASE_PASSWORD"
-            value = "${aws_db_instance.rds.password}"
+             value = "${aws_db_instance.rds.password}"
           }
           env{
             name = "MOODLE_DATABASE_NAME"
@@ -50,8 +49,9 @@ resource "kubernetes_deployment" "moodle" {
           port {
             container_port = 8080
           }
-          port {
-            container_port = 8443
+          volume_mount {
+            name = "moodle-ps"
+            mount_path = "/opt/bitnami/apache2/htdocs/"
           }
           resources {
             limits= {
@@ -64,6 +64,12 @@ resource "kubernetes_deployment" "moodle" {
             }
           }
         }
+      volume {
+        name = "moodle-ps"
+        persistent_volume_claim {
+          claim_name = "moodle-pv-claim"
+        }
+      }
       }
     }
 
@@ -79,9 +85,9 @@ resource "kubernetes_service" "moodle" {
     name = "moodle"
   }
   spec {
-    #selector = {
-    #  App = kubernetes_deployment.moodle.spec.0.template.0.metadata[0].labels.App
-    #}
+    selector = {
+      App = "moodle"
+    }
     port {
       port        = 80
       target_port = 8080
