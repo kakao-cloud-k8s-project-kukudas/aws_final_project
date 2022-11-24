@@ -46,8 +46,21 @@ resource "kubernetes_deployment" "moodle" {
             name = "MOODLE_DATABASE_NAME"
             value = "${aws_db_instance.rds.db_name}"
           }
+          env{
+            name = "PHP_MAX_INPUT_VARS"
+            value = "8000"
+          }
+          env{
+            name = "MOODLE_SSLPROXY"
+            value = "true"
+          }
           port {
             container_port = 8080
+            name = "tcp"
+          }
+          port {
+            container_port = 8443
+            name = "ssll"
           }
           volume_mount {
             name = "moodle-ps"
@@ -91,8 +104,13 @@ resource "kubernetes_service" "moodle" {
     port {
       port        = 80
       target_port = 8080
+      name = "tcp"
     }
-
+    port {
+      port        = 443
+      target_port = 8443
+      name = "ssll"
+    }
     type = "LoadBalancer"
   }
 }
