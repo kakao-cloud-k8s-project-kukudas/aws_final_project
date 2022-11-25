@@ -41,3 +41,8 @@ variable "database_group" {
   type = string
   default = null
 }
+variable "pvc_name" {
+  description = "pvc_name"
+  type = string
+  default = null
+}

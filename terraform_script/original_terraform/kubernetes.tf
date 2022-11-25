@@ -74,7 +74,7 @@ resource "kubernetes_deployment" "moodle" {
       volume {
         name = "moodle-ps"
         persistent_volume_claim {
-          claim_name = "moodle-pv-claim"
+          claim_name = var.pvc_name
         }
       }
       }
@@ -124,7 +124,7 @@ resource "kubernetes_storage_class" "kubeSC" {
 resource "kubernetes_persistent_volume_claim" "pvc" {
   depends_on=[kubernetes_storage_class.kubeSC]
   metadata {
-    name = "moodle-pv-claim"
+    name = var.pvc_name
     labels = {
       "app" = "moodle"
     }
