@@ -7,32 +7,27 @@ read group_name
 echo "$group_name's moodle will be made!"
 
 
-# 기관명으로 테라폼 파일 돌리기 (config 파일 정의 필수)
+# 기관명으로 테라폼 파일 만들고 돌리기 위한 준비
 cp -r original_terraform/ $group_name
 cd $group_name
+# 변수 바꾸기
 echo "
 # terraform.auto.tfvars
 vpc_name     = \"${group_name}-vpc\"
 vpc_cidr     = \"192.168.0.0/16\"
 cluster_name     =\"${group_name}\"
-cluster_version  = \"1.20\" " > terraform.auto.tfvars
-echo "
-resource \"aws_db_subnet_group\" \"sub_ids\" {
-  name = \"${group_name}ss\"
-  subnet_ids = module.vpc.private_subnets
+cluster_version  = \"1.20\" 
+database_name = \"${group_name}db\"
+database_group = \"${group_name}gp\" " > terraform.auto.tfvars
 
-  tags = {
-    Name = \"DB subnet group\"
-  }
-}" >> rds.tf
 
 # 테라폼 적용
-terraform init
-terraform plan
-terraform apply -auto-approve
-# 분명 config 권한이 없어서 오류가 날테니 다시 config 정의
-aws eks --region ap-northeast-1 update-kubeconfig --name $group_name --kubeconfig ~/.kube/$group_name
-cp ~/.kube/$group_name /root/.kube/config
+terraform init && \
+terraform plan && \
+terraform apply -auto-approve && \
+aws eks --region $(terraform output -raw region) update-kubeconfig \
+    --name $(terraform output -raw cluster_name)
+
 
 
 # terraform apply 한번 더 + rds의 endpoint 받아와서 rds address에 저장
@@ -47,3 +42,6 @@ kubectl get svc > a.txt
 awk '/moodle/ {print $4 > "b.txt"}' a.txt
 moodle_address=$(cat b.txt)
 echo "moodle address is '$moodle_address'"
+
+
+#데이터베이스에 넣는 부분 필요
