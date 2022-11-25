@@ -34,7 +34,7 @@ aws eks --region $(terraform output -raw region) update-kubeconfig \
 terraform apply -auto-approve > output.txt
 awk '/rds.amazonaws.com/' output.txt > c.txt
 sed 's/["]//g' c.txt > d.txt
-rds_address=$(awk '{print $4}' d.txt)
+rds_address=$(awk '{print $3}' d.txt)
 echo "rds address is '$rds_address'"
 
 # loadbalancer 주소 받아와서 moodle_address에 저장

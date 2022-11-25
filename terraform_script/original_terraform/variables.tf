@@ -31,3 +31,13 @@ variable "vpc_name" {
   type = string
   default = null
 }
+variable "database_name" {
+  description = "database name"
+  type = string
+  default = null
+}
+variable "database_group" {
+  description = "databse group"
+  type = string
+  default = null
+}
