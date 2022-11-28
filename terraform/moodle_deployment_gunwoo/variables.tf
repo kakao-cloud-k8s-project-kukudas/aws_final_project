@@ -1,12 +1,12 @@
 variable "region" {
-  default = "ap-northeast-1"
+  default = "ap-northeast-2"
 }
 
-variable "azs" {
-  description = "A list of availability zones names or ids in the region"
-  type = list(string)
-  default = ["ap-northeast-1a", "ap-northeast-1c", "ap-northeast-1d"]
-}
+#variable "azs" {
+#  description = "A list of availability zones names or ids in the region"
+#  type = list(string)
+#  default = ["ap-northeast-1a", "ap-northeast-1c", "ap-northeast-1d"]
+#}
 
 variable "cluster_name" {
   description = "Cluster Name"
@@ -31,3 +31,4 @@ variable "vpc_name" {
   type = string
   default = null
 }
+

@@ -25,7 +25,6 @@ resource "aws_security_group" "secgrp-rds" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
-
 }
 
 
@@ -38,15 +37,19 @@ resource "aws_db_subnet_group" "sub_ids" {
   }
 }
 
+data "aws_availability_zones" "available" {}
+
 //RDS INSTANCE
 resource "aws_db_instance" "rds" {
   depends_on=[aws_security_group.secgrp-rds]
   engine               = "mysql"
   engine_version       = "5.7"
   instance_class       = "db.t2.micro"
+  availability_zone    = data.aws_availability_zones.available.names[0]
+  backup_retention_period = 1 
   allocated_storage    = 20
   storage_type         = "gp2"
-  db_name                 = "moodledb"
+  db_name              = "moodledb"
   identifier           = "moodledb"
   username             = "root"
   password             = "test12345"
@@ -57,5 +60,32 @@ resource "aws_db_instance" "rds" {
   iam_database_authentication_enabled = true
   db_subnet_group_name = aws_db_subnet_group.sub_ids.id
   vpc_security_group_ids = [aws_security_group.secgrp-rds.id]
-
 }
+
+resource "aws_db_instance" "rds_replica" {
+   #name                   = "rds-replica"
+   identifier             = "rds-replica"
+   availability_zone      = data.aws_availability_zones.available.names[1]
+   replicate_source_db    = aws_db_instance.rds.identifier
+   instance_class         = "db.t3.micro"
+   apply_immediately      = true
+   publicly_accessible    = true
+   skip_final_snapshot    = true
+   vpc_security_group_ids = [aws_security_group.secgrp-rds.id]
+   parameter_group_name   = "default.mysql5.7"
+}
+
+resource "aws_db_instance" "rds_replica-2" {
+   #name                   = "rds-replica-2"
+   identifier             = "rds-replica-2"
+   availability_zone      = data.aws_availability_zones.available.names[2]
+   replicate_source_db    = aws_db_instance.rds.identifier
+   instance_class         = "db.t3.micro"
+   apply_immediately      = true
+   publicly_accessible    = true
+   skip_final_snapshot    = true
+   vpc_security_group_ids = [aws_security_group.secgrp-rds.id]
+   parameter_group_name   = "default.mysql5.7"
+}
+
+
