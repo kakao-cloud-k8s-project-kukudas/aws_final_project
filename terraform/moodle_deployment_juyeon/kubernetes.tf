@@ -25,7 +25,8 @@ resource "kubernetes_deployment" "moodle" {
         container {
           image = "bitnami/moodle:latest"
           name  = "moodle"
-          command = ["sh", "-c", "sleep 60 && /opt/bitnami/scripts/moodle/run.sh"]
+          command = ["/opt/bitnami/scripts/moodle/entrypoint.sh"]
+          args = ["/opt/bitnami/scripts/moodle/run.sh"]
           env{
             name = "MOODLE_DATABASE_HOST"
             value = "${aws_db_instance.rds.address}"
