@@ -22,7 +22,7 @@ module "eks" {
   eks_managed_node_group_defaults = {
     ami_type               = "AL2_x86_64" # 
     disk_size              = 10           # EBS 사이즈
-    instance_types         = ["t2.small"]
+    instance_types         = ["t2.medium"]
     # vpc_security_group_ids = [aws_security_group.additional.id]
     vpc_security_group_ids = [aws_security_group.secrgrp_moodle.id]
 

@@ -63,11 +63,11 @@ resource "kubernetes_deployment" "moodle" {
           resources {
             limits= {
               cpu    = "0.5"
-              memory = "512Mi"
+              memory = "1024Mi"
             }
             requests= {
               cpu    = "250m"
-              memory = "50Mi"
+              memory = "512Mi"
             }
           }
         }
