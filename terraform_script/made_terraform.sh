@@ -47,6 +47,6 @@ moodle_address=$(cat b.txt)
 echo "moodle address is '$moodle_address'"
 
 #hpa 설정
-kubectl apply -f components.yaml && kubectl autoscale deploy moodle --cpu-percent=10 --min=2 --max=4
+kubectl apply -f ../components.yaml && kubectl autoscale deploy moodle --cpu-percent=10 --min=2 --max=4
 
 #데이터베이스에 넣는 부분 필요
