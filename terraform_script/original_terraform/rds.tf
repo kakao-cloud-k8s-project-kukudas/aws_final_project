@@ -29,7 +29,7 @@ resource "aws_security_group" "secgrp-rds" {
 
 
 resource "aws_db_subnet_group" "sub_ids" {
-  name = "main"
+  name =var.database_group
   subnet_ids = module.vpc.private_subnets
 
   tags = {
@@ -49,8 +49,8 @@ resource "aws_db_instance" "rds" {
   backup_retention_period = 1 
   allocated_storage    = 20
   storage_type         = "gp2"
-  db_name              = "moodledb"
-  identifier           = "moodledb"
+  db_name              =  var.database_name
+  identifier           =  var.database_name
   username             = "root"
   password             = "test12345"
   parameter_group_name = "default.mysql5.7"
