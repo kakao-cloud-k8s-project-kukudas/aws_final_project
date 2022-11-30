@@ -25,7 +25,7 @@ resource "kubernetes_deployment" "moodle" {
         container {
           image = "bitnami/moodle:latest"
           name  = "moodle"
-          command = ["sh", "-c", "sleep 60 && /opt/bitnami/scripts/moodle/run.sh; echo max_input_vars=5000 >> /opt/bitnami/php/lib/php.ini"]
+          command = ["sh", "-c", "sleep 60 && /opt/bitnami/scripts/moodle/run.sh"]
           env{
             name = "MOODLE_DATABASE_HOST"
             value = "${aws_db_instance.rds.address}"
@@ -47,14 +47,20 @@ resource "kubernetes_deployment" "moodle" {
             value = "${aws_db_instance.rds.db_name}"
           }
           env{
+            name = "PHP_MAX_INPUT_VARS"
+            value = "8000"
+          }
+          env{
             name = "MOODLE_SSLPROXY"
             value = "true"
           }
           port {
             container_port = 8080
+            name = "tcp"
           }
           port {
             container_port = 8443
+            name = "ssll"
           }
           volume_mount {
             name = "moodle-ps"

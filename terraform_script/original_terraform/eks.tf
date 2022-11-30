@@ -32,11 +32,46 @@ module "eks" {
 
   # 관리형 노드 그룹 사용 (노드별 추가 설정)
   eks_managed_node_groups = {
-    ("${var.cluster_name}-node-group") = {
+    ("${var.cluster_name}-node-group-1") = {
       # node group 스케일링
-      min_size     = 2# 최소
+      min_size     = 1# 최소
       max_size     = 4 # 최대
-      desired_size = 2 # 기본 유지
+      desired_size = 1 # 기본 유지
+
+      # 생성된 node에 labels 추가 (kubectl get nodes --show-labels로 확인 가능)
+      labels = {
+        ondemand = "true"
+      }
+
+      # 생성되는 인스턴스에 tag추가
+      tags = {
+        "k8s.io/cluster-autoscaler/enabled" : "true"
+        "k8s.io/cluster-autoscaler/${var.cluster_name}" : "true"
+      }
+    }
+    ("${var.cluster_name}-node-group-2") = {
+      # node group 스케일링
+      min_size     = 1 # 최소
+      max_size     = 4 # 최대
+      desired_size = 1 # 기본 유지
+
+      # 생성된 node에 labels 추가 (kubectl get nodes --show-labels로 확인 가능)
+      labels = {
+        ondemand = "true"
+      }
+
+      # 생성되는 인스턴스에 tag추가
+      tags = {
+        "k8s.io/cluster-autoscaler/enabled" : "true"
+        "k8s.io/cluster-autoscaler/${var.cluster_name}" : "true"
+      }
+    }
+
+    ("${var.cluster_name}-node-group-3") = {
+      # node group 스케일링
+      min_size     = 1 # 최소
+      max_size     = 4 # 최대
+      desired_size = 1 # 기본 유지
 
       # 생성된 node에 labels 추가 (kubectl get nodes --show-labels로 확인 가능)
       labels = {
