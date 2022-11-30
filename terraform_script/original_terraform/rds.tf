@@ -64,7 +64,7 @@ resource "aws_db_instance" "rds" {
 
 resource "aws_db_instance" "rds_replica" {
    #name                   = "rds-replica"
-   identifier             = "rds-replica"
+   identifier             = var.replica_name1
    availability_zone      = data.aws_availability_zones.available.names[1]
    replicate_source_db    = aws_db_instance.rds.identifier
    instance_class         = "db.t3.micro"
@@ -77,7 +77,7 @@ resource "aws_db_instance" "rds_replica" {
 
 resource "aws_db_instance" "rds_replica-2" {
    #name                   = "rds-replica-2"
-   identifier             = "rds-replica-2"
+   identifier             = var.replica_name2
    availability_zone      = data.aws_availability_zones.available.names[2]
    replicate_source_db    = aws_db_instance.rds.identifier
    instance_class         = "db.t3.micro"

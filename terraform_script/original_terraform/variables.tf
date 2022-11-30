@@ -46,3 +46,13 @@ variable "pvc_name" {
   type = string
   default = null
 }
+variable "replica_name1" {
+  description = "replica name1"
+  type = string
+  default = null
+}
+variable "replica_name2" {
+  description = "replica name2"
+  type = string
+  default = null
+}

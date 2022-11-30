@@ -19,7 +19,9 @@ cluster_name     =\"${group_name}\"
 cluster_version  = \"1.21\" 
 database_name = \"${group_name}db\"
 database_group = \"${group_name}gp\" 
-pvc_name = \"${group_name}pvc\" " > terraform.auto.tfvars
+pvc_name = \"${group_name}pvc\"
+replica_name1 = \"${group_name}db1\"
+replica_name2 = \"${group_name}db2\"" > terraform.auto.tfvars
 
 
 # 테라폼 적용
