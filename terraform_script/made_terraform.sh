@@ -16,7 +16,7 @@ echo "
 vpc_name     = \"${group_name}-vpc\"
 vpc_cidr     = \"192.168.0.0/16\"
 cluster_name     =\"${group_name}\"
-cluster_version  = \"1.20\" 
+cluster_version  = \"1.21\" 
 database_name = \"${group_name}db\"
 database_group = \"${group_name}gp\" 
 pvc_name = \"${group_name}pvc\" " > terraform.auto.tfvars
