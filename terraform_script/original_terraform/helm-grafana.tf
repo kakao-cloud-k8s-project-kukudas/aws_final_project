@@ -16,5 +16,8 @@ resource "helm_release" "grafana" {
     file("${path.module}/grafana.yaml"),
     yamlencode(var.settings_grafana)
   ]
-
+  set {
+    name = "service.type"
+    value="LoadBalancer"
+  }
 }
