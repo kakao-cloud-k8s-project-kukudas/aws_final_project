@@ -26,11 +26,14 @@ resource "kubernetes_deployment" "moodle" {
           image = "bitnami/moodle:latest"
           name  = "moodle"
           command = ["/opt/bitnami/scripts/moodle/entrypoint.sh"]
-          args = ["/opt/bitnami/scripts/moodle/run.sh"] 
-          
+          args = ["/opt/bitnami/scripts/moodle/run.sh"]
+          env{
+            name = "MOODLE_DATABASE_TYPE"
+            value = "mysqli"
+          }
           env{
             name = "MOODLE_DATABASE_HOST"
-            value = "${aws_db_instance.rds.endpoint}"
+            value = "${aws_db_instance.rds.address}"
           }
           env{
             name = "MOODLE_DATABASE_PORT"
@@ -42,35 +45,31 @@ resource "kubernetes_deployment" "moodle" {
           }
           env{
             name = "MOODLE_DATABASE_PASSWORD"
-            value = "${aws_db_instance.rds.password}"
+             value = "${aws_db_instance.rds.password}"
           }
           env{
             name = "MOODLE_DATABASE_NAME"
             value = "${aws_db_instance.rds.db_name}"
           }
-          volume_mount {
-            name = "moodle-ps"
-            mount_path = "/moodle/moodledata"
+          env{
+            name = "PHP_MAX_INPUT_VARS"
+            value = "8000"
           }
           port {
             container_port = 8080
+            name = "tcp"
           }
           port {
             container_port = 8443
+            name = "ssll"
           }
-          resources {
-            limits= {
-              cpu    = "0.5"
-              memory = "512Mi"
-            }
-            requests= {
-              cpu    = "250m"
-              memory = "50Mi"
-            }
+          volume_mount {
+            name = "moodle-data"
+            mount_path = "/bitnami/moodledata"
           }
         }
       volume {
-        name = "moodle-ps"
+        name = "moodle-data"
         persistent_volume_claim {
           claim_name = "moodle-pv-claim"
         }
@@ -90,14 +89,19 @@ resource "kubernetes_service" "moodle" {
     name = "moodle"
   }
   spec {
-    #selector = {
-    #  App = kubernetes_deployment.moodle.spec.0.template.0.metadata[0].labels.App
-    #}
+    selector = {
+      App = "moodle"
+    }
     port {
       port        = 80
       target_port = 8080
+      name = "tcp"
     }
-
+    port {
+      port        = 443
+      target_port = 8443
+      name = "ssll"
+    }
     type = "LoadBalancer"
   }
 }
@@ -107,6 +111,7 @@ resource "kubernetes_storage_class" "kubeSC" {
     name = "kubese"
   }
   storage_provisioner = "kubernetes.io/aws-ebs"
+  volume_binding_mode = "WaitForFirstConsumer"
   reclaim_policy = "Retain"
   parameters = {
     type = "gp2"

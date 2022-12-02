@@ -10,9 +10,9 @@ module "vpc" {
   # NAT게이트웨이를 1개만 생성합니다.
   single_nat_gateway = true
 
-  public_subnets = [for index in range(2):
+  public_subnets = [for index in range(3):
                       cidrsubnet(var.vpc_cidr, 4, index)]
 
-  private_subnets = [for index in range(2):
-                      cidrsubnet(var.vpc_cidr, 4, index + 2)]
+  private_subnets = [for index in range(3):
+                      cidrsubnet(var.vpc_cidr, 4, index + 3)]
 }
