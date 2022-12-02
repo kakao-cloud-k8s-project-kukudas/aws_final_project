@@ -25,8 +25,12 @@ resource "kubernetes_deployment" "moodle" {
         container {
           image = "bitnami/moodle:latest"
           name  = "moodle"
-          command = ["/opt/bitnami/scripts/moodle/entrypoint.sh"]
+          command = ["sh", "-c" , "/opt/bitnami/scripts/moodle/entrypoint.sh /opt/bitnami/scripts/moodle/run.sh && /opt/bitnami/scripts/moodle/run.sh "]
           args = ["/opt/bitnami/scripts/moodle/run.sh"]
+          env{
+            name = "MOODLE_SKIP_BOOTSTRAP"
+            value = "yes"
+          }
           env{
             name = "MOODLE_DATABASE_HOST"
             value = "${aws_db_instance.rds.address}"
@@ -55,6 +59,10 @@ resource "kubernetes_deployment" "moodle" {
             name = "MOODLE_SSLPROXY"
             value = "true"
           }
+          env{
+            name = "BITNAMI_DEBUG"
+            value=true
+          }
           port {
             container_port = 8080
             name = "tcp"
@@ -65,7 +73,7 @@ resource "kubernetes_deployment" "moodle" {
           }
           volume_mount {
             name = "moodle-ps"
-            mount_path = "/opt/bitnami/apache2/htdocs/"
+            mount_path = "/bitnami/moodledata/"
           }
           resources {
             limits= {
