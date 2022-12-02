@@ -41,3 +41,4 @@ resource "aws_security_group" "secrgrp_moodle" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
+
