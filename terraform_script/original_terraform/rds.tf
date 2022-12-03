@@ -42,8 +42,8 @@ data "aws_availability_zones" "available" {}
 //RDS INSTANCE
 resource "aws_db_instance" "rds" {
   depends_on=[aws_security_group.secgrp-rds]
-  engine               = "mysql"
-  engine_version       = "5.7"
+  engine               = "mariadb"
+  engine_version       = "10.4"
   instance_class       = "db.t2.micro"
   availability_zone    = data.aws_availability_zones.available.names[0]
   backup_retention_period = 1 
@@ -53,7 +53,7 @@ resource "aws_db_instance" "rds" {
   identifier           =  var.database_name
   username             = "root"
   password             = "test12345"
-  parameter_group_name = "default.mysql5.7"
+  parameter_group_name = "default.mariadb10.4"
   publicly_accessible = true
   skip_final_snapshot = true
   apply_immediately   = true
