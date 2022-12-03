@@ -28,6 +28,10 @@ resource "kubernetes_deployment" "moodle" {
           command = ["/opt/bitnami/scripts/moodle/entrypoint.sh"]
           args = ["/opt/bitnami/scripts/moodle/run.sh"]
           env{
+            name = "MOODLE_SKIP_BOOTSTRAP"
+            value = "yes"
+          }
+          env{
             name = "MOODLE_DATABASE_TYPE"
             value = "mysqli"
           }
