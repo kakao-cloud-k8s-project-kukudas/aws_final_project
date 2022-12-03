@@ -26,10 +26,12 @@ replica_name2 = \"${group_name}db2\"" > terraform.auto.tfvars
 
 # 테라폼 적용
 terraform init && \
-terraform plan && \
-terraform apply -auto-approve && \
-aws eks --region $(terraform output -raw region) update-kubeconfig \
-    --name $(terraform output -raw cluster_name)
+terraform plan 
+aws eks --region ap-northeast-1 update-kubeconfig \
+    --name ${group_name}
+terraform apply -auto-approve
+aws eks --region ap-northeast-1 update-kubeconfig \
+    --name ${group_name}
 
 
 
