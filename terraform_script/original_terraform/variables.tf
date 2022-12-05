@@ -125,7 +125,7 @@ variable "helm_chart_prometheus_name" {
 
 variable "helm_chart_prometheus_version" {
   type        = string
-  default     = "14.5.0"
+  default     = "14.7.2"
   description = "Prometheus Helm chart version."
 }
 
