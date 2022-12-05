@@ -11,6 +11,7 @@ provider "helm" {
 }
 
 resource "helm_release" "cluster-autoscaler" {
+  depends_on = [module.eks]
   name       = "cluster-autoscaler"
   repository = "https://kubernetes.github.io/autoscaler"
   chart      = "cluster-autoscaler"
