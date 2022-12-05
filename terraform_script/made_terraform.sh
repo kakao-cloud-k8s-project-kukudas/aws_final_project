@@ -48,6 +48,12 @@ awk '/moodle/ {print $4 > "b.txt"}' a.txt
 moodle_address=$(cat b.txt)
 echo "moodle address is '$moodle_address'"
 
+#grafana 주소 저장 
+kubectl get svc -A > a.txt
+awk '/grafana/ {print $5 > "b.txt"}' a.txt
+grafana_address=$(cat b.txt)
+echo "grafana address is '$grafana_address'"
+
 #hpa 설정
 kubectl apply -f ../components.yaml && kubectl autoscale deploy moodle --cpu-percent=10 --min=2 --max=4
 
