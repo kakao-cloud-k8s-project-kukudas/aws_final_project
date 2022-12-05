@@ -6,6 +6,7 @@ datasources:
       type: prometheus
       url: http://prometheus-server.prometheus.svc.cluster.local
       access: proxy
+      editable: false
       isDefault: true
 
 dashboardProviders:
@@ -17,7 +18,7 @@ dashboardProviders:
       folder: ''
       type: file
       disableDeletion: false
-      editable: true
+      editable: false
       options:
         path: /var/lib/grafana/dashboards/default
 
