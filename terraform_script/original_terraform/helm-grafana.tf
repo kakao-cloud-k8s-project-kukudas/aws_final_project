@@ -1,5 +1,5 @@
 resource "helm_release" "grafana" {
-  depends_on = [var.mod_dependency, kubernetes_namespace.grafana]
+  depends_on = [var.mod_dependency, kubernetes_namespace.grafana,module.eks]
   count      = var.enabled ? 1 : 0
   name       = var.helm_chart_grafana_name
   chart      = var.helm_chart_grafana_release_name
