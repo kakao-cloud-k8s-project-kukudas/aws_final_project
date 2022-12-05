@@ -162,7 +162,7 @@ variable "helm_chart_grafana_name" {
 
 variable "helm_chart_grafana_version" {
   type        = string
-  default     = "6.15.0"
+  default     = "6.44.10"
   description = "Grafana Helm chart version."
 }
 
