@@ -51,7 +51,7 @@ echo "moodle address is '$moodle_address'"
 #grafana 주소 저장 
 kubectl get svc -A > a.txt
 awk '/grafana/ {print $5 > "b.txt"}' a.txt
-grafana_address=$(cat b.txt)
+grafana_address=$(cat b.txt)/d/rYdddlPWk/node-exporter-full?orgId=1
 echo "grafana address is '$grafana_address'"
 
 #hpa 설정
