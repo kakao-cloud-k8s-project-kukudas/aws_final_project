@@ -1,0 +1,116 @@
+resource "kubernetes_namespace" "moodle" {
+  depends_on = [var.mod_dependency]
+  count      = (var.enabled && var.create_namespace_moodle && var.namespace_moodle != "kube-system") ? 1 : 0
+
+  metadata {
+    name = var.namespace_moodle
+  }
+}
+
+variable "create_namespace_moodle" {
+  type        = bool
+  default     = true
+  description = "Whether to create moodle Kubernetes namespace with name defined by `namespace`."
+}
+
+variable "namespace_moodle" {
+  type        = string
+  default     = "moodle"
+  description = "Kubernetes namespace to deploy moodle stack Helm charts."
+}
+
+variable "settings_moodle" {
+  default = {
+    persistence = {
+      enabled          = true
+      storageClassName = "gp2"
+    }
+    adminPassword = "admin"
+  }
+  description = "Additional settings which will be passed to moodle Helm chart values."
+}
+
+variable "helm_chart_moodle_release_name" {
+  type        = string
+  default     = "moodle"
+  description = "moodle Helm release name"
+}
+
+variable "helm_chart_moodle_name" {
+  type        = string
+  default     = "moodle"
+  description = "moodle Helm chart name to be installed"
+}
+
+variable "helm_chart_moodle_version" {
+  type        = string
+  default     = "14.3.2" 
+  description = "moodle Helm chart version."
+}
+
+variable "helm_chart_moodle_repo" {
+  type        = string
+  default     = "https://charts.bitnami.com/bitnami"
+  description = "moodle repository name."
+}
+
+resource "helm_release" "moodle" {
+  depends_on = [var.mod_dependency, kubernetes_namespace.moodle, module.eks]
+  count      = var.enabled ? 1 : 0
+  name       = var.helm_chart_moodle_name
+  chart      = var.helm_chart_moodle_release_name
+  repository = var.helm_chart_moodle_repo
+  version    = var.helm_chart_moodle_version
+  namespace  = var.namespace_moodle
+  timeout    = 600
+
+  set { 
+    name = "moodleUsername" 
+    value = "admin" 
+  } 
+
+  set {
+    name = "moodlePassword"
+    value = "password"
+  } 
+
+  set { 
+    name = "mariadb.enabled" 
+    value = "false" 
+  } 
+
+  set { 
+    name = "externalDatabase.type"
+    value = "mariadb"
+  }
+
+  set { 
+    name = "externalDatabase.host"
+    value = aws_db_instance.rds.address
+  }
+
+  set { 
+    name = "externalDatabase.port" 
+    value = "3306" 
+  }
+
+  set { 
+    name = "externalDatabase.user" 
+    value = "root" 
+  }
+
+  set { 
+    name = "externalDatabase.password" 
+    value = "test12345" 
+  }
+
+  set { 
+    name = "externalDatabase.database" 
+    value = var.database_name
+  }
+
+  set {
+    name = "service.type"
+    value="LoadBalancer"
+  }
+}
