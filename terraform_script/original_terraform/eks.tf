@@ -2,7 +2,7 @@ data "aws_caller_identity" "current" {}
 
 locals {
   node_group_name        = "${var.cluster_name}-node-group"
-  iam_role_policy_prefix = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:policy"
+  # iam_role_policy_prefix = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:policy"
 }
 
 module "eks" {
@@ -26,8 +26,8 @@ module "eks" {
     # vpc_security_group_ids = [aws_security_group.additional.id]
     vpc_security_group_ids = [aws_security_group.secrgrp_moodle.id]
 
-                # cluster-autoscaler에 사용 될 IAM 등록
-    iam_role_additional_policies = ["${local.iam_role_policy_prefix}/${module.iam_policy_autoscaling.name}"]
+    # cluster-autoscaler에 사용 될 IAM 등록
+    # iam_role_additional_policies = ["${local.iam_role_policy_prefix}/${module.iam_policy_autoscaling.name}"]
   }
 
   # 관리형 노드 그룹 사용 (노드별 추가 설정)
