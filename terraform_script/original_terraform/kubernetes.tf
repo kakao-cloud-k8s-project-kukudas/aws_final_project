@@ -115,7 +115,7 @@ resource "kubernetes_service" "moodle" {
       port=443
       target_port=8443
       name="ssl"
-   }
+    }
 
     type = "LoadBalancer"
   }
