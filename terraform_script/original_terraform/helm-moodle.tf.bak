@@ -62,7 +62,13 @@ resource "helm_release" "moodle" {
   repository = var.helm_chart_moodle_repo
   version    = var.helm_chart_moodle_version
   namespace  = var.namespace_moodle
-  timeout    = 600
+  timeout    = 3000
+
+
+  set {
+    name = "replicaCount"
+    value = "3"
+  }
 
   set { 
     name = "moodleUsername" 
