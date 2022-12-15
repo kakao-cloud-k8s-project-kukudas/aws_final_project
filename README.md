@@ -15,8 +15,9 @@
 
 <br>
 
-## Topology
-- 그림 추가 예정
+## Architecture
+![Arch](https://user-images.githubusercontent.com/70618223/207789487-49b7f678-1064-4b89-adfb-6ba2e8f875b5.png)
+
 
 <br>
 
