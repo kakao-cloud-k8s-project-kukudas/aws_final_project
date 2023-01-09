@@ -2,6 +2,8 @@
 
 # 교육 기관용 그룹웨어 구축 및 제공 <br>(Provision AWS resources with Terraform)
 
+## Demo video 
+https://www.youtube.com/watch?v=dLmNjxRBg_U
 
 ## Description
 
